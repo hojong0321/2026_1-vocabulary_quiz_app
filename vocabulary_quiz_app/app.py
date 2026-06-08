@@ -82,11 +82,11 @@ class VocabularyQuizApp:
         if self.current is None:
             return
    
-    meaning = self.current.meaning
+        meaning = self.current.meaning
         
-    if meaning:
-        hint_text = f"힌트: {meaning[0]}" + "-" * (len(meaning) - 1)
-        hint_text += f" ({len(meaning)}글자)"
+        if meaning:
+            hint_text = f"힌트: {meaning[0]}" + "-" * (len(meaning) - 1)
+            hint_text += f" ({len(meaning)}글자)"
             
-        self.hint_var.set(hint_text)
-        self.hint_button.state(["disabled"])
+            self.hint_var.set(hint_text)
+            self.hint_button.state(["disabled"])
