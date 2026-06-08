@@ -41,9 +41,15 @@ class VocabularyQuizApp:
         ttk.Button(buttons, text="다음", command=self.next_word).pack(
             side=tk.LEFT, padx=6
         )
-
+        
         ttk.Label(root, textvariable=self.feedback_var).pack(pady=8)
         ttk.Label(root, textvariable=self.score_var).pack()
+
+        self.hint_var = tk.StringVar(value="")
+        ttk.Label(root, textvariable=self.hint_var, font=("NanumGothic", 11), foreground="blue").pack(pady=4)
+
+        self.hint_button = ttk.Button(buttons, text="힌트", command=self.show_hint)
+        self.hint_button.pack(side=tk.LEFT, padx=6)
 
         self.next_word()
 
@@ -52,6 +58,8 @@ class VocabularyQuizApp:
         self.word_var.set(self.current.term)
         self.answer_entry.delete(0, tk.END)
         self.feedback_var.set("")
+        self.hint_var.set("")
+        self.hint_button.state(["!disabled"])   
         self.checked = False
         self.check_button.state(["!disabled"])
         self.answer_entry.focus()
@@ -69,3 +77,16 @@ class VocabularyQuizApp:
             self.feedback_var.set(f"오답입니다. 정답: {self.current.meaning}")
         self.score_var.set(f"Score: {self.score}/{self.total}")
         self.check_button.state(["disabled"])
+
+        def show_hint(self) -> None:
+            if self.current is None:
+                return
+   
+        meaning = self.current.meaning
+        
+        if meaning:
+            hint_text = f"힌트: {meaning[0]}" + "-" * (len(meaning) - 1)
+            hint_text += f" ({len(meaning)}글자)"
+            
+            self.hint_var.set(hint_text)
+            self.hint_button.state(["disabled"])
